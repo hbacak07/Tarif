@@ -165,21 +165,59 @@
     border:1px solid var(--border);
     border-radius:12px;
     box-shadow:var(--shadow);
-    padding:14px 20px;
+    padding:9px 12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex:0 0 auto;
+  }
+  .nav-arrow{
+    all:unset;
+    cursor:pointer;
+    flex:0 0 auto;
+    width:32px;
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:999px;
+    border:1px solid var(--border);
+    color:var(--ink-muted);
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:16px;
+    line-height:1;
+  }
+  .nav-arrow:hover{ background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
+  .nav-arrow:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+  .nav-arrow:active{ transform:scale(.94); }
+  .title-wrap{
+    flex:1;
+    min-width:0;
     display:flex;
     align-items:baseline;
-    justify-content:space-between;
-    gap:16px;
-    flex:0 0 auto;
+    gap:12px;
   }
   .entry-head h2{
     margin:0;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
     font-size:clamp(18px, 2.6vw, 25px);
     font-weight:600;
     letter-spacing:-0.01em;
     color:var(--ink);
   }
+  .entry-head .counter{
+    flex:0 0 auto;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
   .entry-head .tag{
+    flex:0 0 auto;
     font-family:"IBM Plex Mono", ui-monospace, monospace;
     font-size:10.5px;
     text-transform:uppercase;
@@ -271,9 +309,11 @@
     .entry-btn .no{ display:none; }
     .entry-btn .lbl{ font-size:11.5px; white-space:nowrap; }
     .rail-foot{ display:none; }
-    .entry-head{ padding:9px 14px; }
-    .entry-head h2{ font-size:15px; }
-    .entry-head .tag{ font-size:9px; }
+    .entry-head{ padding:6px 8px; gap:8px; }
+    .entry-head h2{ font-size:14px; }
+    .entry-head .tag{ display:none; }
+    .entry-head .counter{ font-size:9.5px; }
+    .nav-arrow{ width:28px; height:28px; font-size:14px; }
     .card{ padding:8px 12px; grid-template-columns:20px 1fr; gap:8px; }
     .card .num{ font-size:14px; }
     .card-body h3{ font-size:9px; }
@@ -302,8 +342,13 @@
 
   <main>
     <div class="entry-head">
-      <h2 id="titleLabel"></h2>
-      <span class="tag" id="tagLabel"></span>
+      <button class="nav-arrow" id="prevBtn" type="button" aria-label="Önceki tarif">‹</button>
+      <div class="title-wrap">
+        <h2 id="titleLabel"></h2>
+        <span class="tag" id="tagLabel"></span>
+      </div>
+      <span class="counter" id="counterLabel"></span>
+      <button class="nav-arrow" id="nextBtn" type="button" aria-label="Sonraki tarif">›</button>
     </div>
     <div class="sections">
       <div class="card prompt">
@@ -334,28 +379,28 @@
 <script>
   const ENTRIES = [
     {
-      label: "Komut Defteri Sitesi",
+      label: "Konu & Kitle Sorusu",
       tag: "gerçek prompt",
       real: true,
-      prompt: "Bana küçük bir web sitesi yap, içerisinde yazdığım kelimelerin açıklaması olsun. Her kelime tek bir sayfada olacak şekilde ve kaydırma olmasın. Yazdığım içeriği tek sayfaya sıkıştır. '/clear,/rewind,@file,@directory,/init' açıklamalarını siteyi yaptığımızda ekleyeceğim. Açıklama kısmı kendi içerisinde 3 bölüm, 1. benim açıklamam, 2. claude ne yaptığı, 3.benim ne öğrendiğim olacak. Benim yapacağım kısımları dumy doldurabilirsin",
-      claude: "Artifact tasarım sürecini işletip 'Komut Defteri' adında, soldan komut seçilen, kaydırmasız tek sayfa bir site kurdum. Her komut için 3 bölümlü kart tasarladım; kullanıcının dolduracağı iki bölümü açık yer tutucu metinle bıraktım, 'Claude Ne Yaptı' bölümünü gerçek ve doğru açıklamalarla doldurdum.",
-      learned: "Bu prompttan çıkardığın dersi buraya yaz."
+      prompt: "Bana insanların en çok aradığı, ilgisini çeken konu başlıklarını, platform, kitle bilgisi verebilir misin",
+      claude: "On bir satırlık bir tablo çıkardı: finans, sağlık, oyun, eğitim… Hepsi doğruydu, hiçbiri benim değildi. Elimde karar değil, daha çok seçenek kaldı.",
+      learned: "Hedefi olmayan soru ansiklopedi maddesi getiriyor. Model bilmediğim şeyi değil, sormadığım şeyi eksik bırakıyor."
     },
     {
-      label: "Sıralı Röportaj",
+      label: "Mülakat Sonra Öneri",
       tag: "gerçek prompt",
       real: true,
-      prompt: "şimdi tek tek bana benim açıklamam ve ben ne öğrediğimi sor, cevabını almadan bir sonrakine geçme",
-      claude: "5 komutun her biri için sırayla 'Benim Açıklamam' ve 'Ne Öğrendim' sorularını tek tek sordum; her defasında cevabı bekleyip kaydettim ve bir sonrakine ancak ondan sonra geçtim. En sonunda tüm cevapları siteye işleyip yeniden yayınladım.",
-      learned: "Bu prompttan çıkardığın dersi buraya yaz."
+      prompt: "Önce benimle bir mülakat yap, sonra öneride bulun. Bu soruları teker teker sor, bir sonrakine geçmeden cevabımı bekle: […] Kural: yalnızca sana gerçekten söylediklerimi kullan; bahsetmediğim becerileri asla uydurma. Bir cevabım belirsizse tahmin etme, hangisini yeniden cevaplamam gerektiğini söyle.",
+      claude: "Dört soruyu tek tek sordu ve her birinde durdu. Sonunda çıkan üç öneri de benim kendi cümlelerimden kuruldu — bana ait olmayan tek bir beceri eklenmedi.",
+      learned: "İşi yapan şey soruların kendisi değildi. 'Bekle' ve 'uydurma' talimatlarıydı: biri sırayı, diğeri kaynağı kilitledi."
     },
     {
-      label: "Paylaşım Sorusu",
+      label: "Tarif Defteri Talebi",
       tag: "gerçek prompt",
       real: true,
-      prompt: "Ben bunu nasıl paylaşabilirim. Link üzerinden birisi erişebilsin",
-      claude: "Artifact'ların varsayılan olarak gizli yayınlandığını, paylaşımın sayfanın kendi paylaşım menüsünden açılması gerektiğini açıkladım. Bu kararı kullanıcı adına veremeyeceğimi belirtip adımları tarif ettim.",
-      learned: "Bu prompttan çıkardığın dersi buraya yaz."
+      prompt: "En iyi promptlarını belgeleyen küçük bir site yap. Kısıt: her kayıt tek ekran, kaydırma yok. Kendini sıkıştırmaya zorla. Yayınla ve URL'i gönder. Okuyucuların, önümüzdeki ay bu kursa başlayacak insanlar.",
+      claude: "Siteyi kurdu, ama URL gelmedi: yayınlama onun elinde değil. Buna karşılık 'tek ekran' kısıtı metni gerçekten kısalttı — beş kayıt üçe indi, her cümle kırpıldı.",
+      learned: "Kısıt, kalite kontrolünün kendisi. Sınır koymadığım her yerde uzun ve dolgulu metin geliyor. Okuyucuyu adlandırmak da tonu tek başına değiştirdi."
     },
     {
       label: "Blog Sitesi",
@@ -378,9 +423,12 @@
   const nav = document.getElementById("entryNav");
   const titleLabel = document.getElementById("titleLabel");
   const tagLabel = document.getElementById("tagLabel");
+  const counterLabel = document.getElementById("counterLabel");
   const promptText = document.getElementById("promptText");
   const claudeText = document.getElementById("claudeText");
   const learnedText = document.getElementById("learnedText");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
 
   let current = 0;
 
@@ -399,6 +447,7 @@
     titleLabel.textContent = e.label;
     tagLabel.textContent = e.tag;
     tagLabel.classList.toggle("real", e.real);
+    counterLabel.textContent = `${i + 1} / ${ENTRIES.length}`;
     promptText.textContent = e.prompt;
     claudeText.textContent = e.claude;
     learnedText.textContent = e.learned;
@@ -408,6 +457,9 @@
     });
     try { localStorage.setItem("prompt-tarif-defteri-index", String(i)); } catch(err) {}
   }
+
+  prevBtn.addEventListener("click", () => select((current - 1 + ENTRIES.length) % ENTRIES.length));
+  nextBtn.addEventListener("click", () => select((current + 1) % ENTRIES.length));
 
   document.addEventListener("keydown", (ev) => {
     if (ev.key === "ArrowRight") select((current + 1) % ENTRIES.length);
