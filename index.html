@@ -379,28 +379,28 @@
 <script>
   const ENTRIES = [
     {
-      label: "Konu & Kitle Sorusu",
+      label: "Blog Sitesi",
       tag: "gerçek prompt",
       real: true,
-      prompt: "Bana insanların en çok aradığı, ilgisini çeken konu başlıklarını, platform, kitle bilgisi verebilir misin",
-      claude: "On bir satırlık bir tablo çıkardı: finans, sağlık, oyun, eğitim… Hepsi doğruydu, hiçbiri benim değildi. Elimde karar değil, daha çok seçenek kaldı.",
-      learned: "Hedefi olmayan soru ansiklopedi maddesi getiriyor. Model bilmediğim şeyi değil, sormadığım şeyi eksik bırakıyor."
+      prompt: "Benim için basit bir blok sitesi oluştur",
+      claude: "Bemin için basit bir sayfa oluşturdu. ",
+      learned: "Basit bir prompa karşı basit bir sayfa oluşturdu. Burada yazdğım prompun biraz daha detaylar verilerek yazılması gerektiğini öğrendim"
     },
     {
-      label: "Mülakat Sonra Öneri",
+      label: "Blog Sitesinde Değişiklik",
       tag: "gerçek prompt",
       real: true,
-      prompt: "Önce benimle bir mülakat yap, sonra öneride bulun. Bu soruları teker teker sor, bir sonrakine geçmeden cevabımı bekle: […] Kural: yalnızca sana gerçekten söylediklerimi kullan; bahsetmediğim becerileri asla uydurma. Bir cevabım belirsizse tahmin etme, hangisini yeniden cevaplamam gerektiğini söyle.",
-      claude: "Dört soruyu tek tek sordu ve her birinde durdu. Sonunda çıkan üç öneri de benim kendi cümlelerimden kuruldu — bana ait olmayan tek bir beceri eklenmedi.",
-      learned: "İşi yapan şey soruların kendisi değildi. 'Bekle' ve 'uydurma' talimatlarıydı: biri sırayı, diğeri kaynağı kilitledi."
+      prompt: "@index.html sayfasındaki başlığı değiştri",
+      claude: "İstediğim yerdeği değişikliği yaptı",
+      learned: "Yapmak istediğim metni istediğim metin ile değiştirdi. Yapmak istediğimi net bir şekilde belirttiğimde daha doğru sonuçlar alabildiğimi"
     },
     {
-      label: "Tarif Defteri Talebi",
+      label: "Cv Güncellemesi",
       tag: "gerçek prompt",
       real: true,
-      prompt: "En iyi promptlarını belgeleyen küçük bir site yap. Kısıt: her kayıt tek ekran, kaydırma yok. Kendini sıkıştırmaya zorla. Yayınla ve URL'i gönder. Okuyucuların, önümüzdeki ay bu kursa başlayacak insanlar.",
-      claude: "Siteyi kurdu, ama URL gelmedi: yayınlama onun elinde değil. Buna karşılık 'tek ekran' kısıtı metni gerçekten kısalttı — beş kayıt üçe indi, her cümle kırpıldı.",
-      learned: "Kısıt, kalite kontrolünün kendisi. Sınır koymadığım her yerde uzun ve dolgulu metin geliyor. Okuyucuyu adlandırmak da tonu tek başına değiştirdi."
+      prompt: "Elimde bir cv var taslağı değiştirmeden bu cv'nin sadece içeriğini tr -> en çevir",
+      claude: "Verdiğim cv'yi tr -> en çevirdi",
+      learned: "Cv'mi ingilizce başarılı bir şekilde güncelledi. Net istek doğru sonuç"
     },
     {
       label: "Blog Sitesi",
